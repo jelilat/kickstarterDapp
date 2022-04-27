@@ -1,0 +1,39 @@
+.form {
+    margin: auto;
+    width: 50%;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+input[type="file"] {
+    padding: 0px;
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    height: 100px;
+}
+
+button {
+    background-color: #6c83ff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    margin: auto;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .form {
+        width: 80%;
+    }
+}

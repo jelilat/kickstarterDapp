@@ -8,7 +8,7 @@ use crate::{
         assert_single_promise_success,
     },
     models::{
-        Crowdfund,
+        Campaign,
         Donation
     }
 };
@@ -23,7 +23,7 @@ near_sdk::setup_alloc!();
 #[derive(Clone, Default, BorshDeserialize, BorshSerialize)]
 pub struct Contract {
     owner: AccountId,
-    crowdfunds: Vec<Crowdfund>,
+    campaigns: Vec<Campaign>,
     donations: Vec<Donation>,
 }
 
@@ -33,44 +33,43 @@ impl Contract{
     pub fn init(
         owner: AccountId,
     ) -> Self{
-        let crowdfunds: Vec<Crowdfund> = Vec::new();
+        let campaigns: Vec<Campaign> = Vec::new();
         let donations: Vec<Donation> = Vec::new();
 
         Contract{
             owner,
-            crowdfunds,
+            campaigns,
             donations
         }
     }
 
-    pub fn add_crowdfund(&mut self, title: String, donation_target: u128, description: String, image: String) -> i32 {
+    pub fn add_campaign(&mut self, title: String, donation_target: u128, description: String, image: String) -> i32 {
             
-        let id = self.crowdfunds.len() as i32;
+        let id = self.campaigns.len() as i32;
         
-        self.crowdfunds.push(Crowdfund::new(
+        self.campaigns.push(Campaign::new(
             id,
             title,
             donation_target,
             description,
             image
         ));
-        env::log("Added a new crowdfund".as_bytes());
+        env::log("Added a new campaign".as_bytes());
         return id
     }
 
-    pub fn list_crowdfunds(&self) -> Vec<Crowdfund> {
-        assert_self();
-        let crowdfunds = &self.crowdfunds;
-        return crowdfunds.to_vec();
+    pub fn list_campaigns(&self) -> Vec<Campaign> {
+        let campaigns = &self.campaigns;
+        return campaigns.to_vec();
     }
 
     pub fn add_vote(&mut self, num_id:i32){
         let id: usize = num_id as usize;
-        let crowdfund: &mut Crowdfund = self.crowdfunds.get_mut(id).unwrap();
+        let campaign: &mut Campaign = self.campaigns.get_mut(id).unwrap();
         let voter = env::predecessor_account_id();
-        crowdfund.total_votes = crowdfund.total_votes + 1;
+        campaign.total_votes = campaign.total_votes + 1;
         env::log("vote submitted succesfully".as_bytes());
-        crowdfund.votes.push(voter);
+        campaign.votes.push(voter);
         
     }
 
@@ -78,9 +77,9 @@ impl Contract{
         assert!(amount == env::attached_deposit(), "Attached deposit must be equal to the donation amount");
         let id: usize = num_id as usize;
         let transfer_amount: u128 = ONE_NEAR * amount;
-        let crowdfund: &mut Crowdfund = self.crowdfunds.get_mut(id).unwrap();
-        crowdfund.total_donations = crowdfund.total_donations + transfer_amount;
-        crowdfund.donations.push(Donation::new(num_id));
+        let campaign: &mut Campaign = self.campaigns.get_mut(id).unwrap();
+        campaign.total_donations = campaign.total_donations + transfer_amount;
+        campaign.donations.push(Donation::new(num_id));
         self.donations.push(Donation::new(num_id));
 
        //TODO: ensure that amount == env::attached_deposit()
@@ -88,31 +87,31 @@ impl Contract{
       env::log("You have donated succesfully".as_bytes());
     }
 
-    pub fn crowdfund_count(&mut self) -> usize {
-        return self.crowdfunds.len();
+    pub fn campaign_count(&self) -> usize {
+        return self.campaigns.len();
     }
 
-    pub fn get_total_donations(&mut self, num_id:i32) -> u128 {
+    pub fn get_total_donations(&self, num_id:i32) -> u128 {
         let id: usize = num_id as usize;
-        let crowdfund: &mut Crowdfund = self.crowdfunds.get_mut(id).unwrap();
-        return crowdfund.total_donations;
+        let campaign: &Campaign = self.campaigns.get(id).unwrap();
+        return campaign.total_donations;
     }
 
-    pub fn get_total_votes(&mut self, num_id:i32) -> i64 {
+    pub fn get_total_votes(&self, num_id:i32) -> i64 {
         let id: usize = num_id as usize;
-        let crowdfund: &mut Crowdfund = self.crowdfunds.get_mut(id).unwrap();
-        return crowdfund.total_votes;
+        let campaign: &Campaign = self.campaigns.get(id).unwrap();
+        return campaign.total_votes;
     }
 
-    pub fn get_donations(&mut self, num_id:i32) -> Vec<Donation> {
+    pub fn get_donations(&self, num_id:i32) -> Vec<Donation> {
         let id: usize = num_id as usize;
-        let crowdfund: &mut Crowdfund = self.crowdfunds.get_mut(id).unwrap();
-        return crowdfund.donations.to_vec();
+        let campaign: &Campaign = self.campaigns.get(id).unwrap();
+        return campaign.donations.to_vec();
     }
 
-    pub fn get_crowdfund_details(&mut self, num_id:i32) -> Crowdfund {
+    pub fn get_campaign_details(&self, num_id:i32) -> Campaign {
         let id: usize = num_id as usize;
-        let crowdfund: &mut Crowdfund = self.crowdfunds.get_mut(id).unwrap();
-        return crowdfund.clone();
+        let campaign: &Campaign = self.campaigns.get(id).unwrap();
+        return campaign.clone();
     }
 }

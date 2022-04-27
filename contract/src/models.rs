@@ -11,7 +11,7 @@ use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 
     #[derive(Clone, Serialize, Deserialize, BorshDeserialize, BorshSerialize)]
     #[serde(crate = "near_sdk::serde")]
-    pub struct Crowdfund{
+    pub struct Campaign{
       pub id: i32,
       pub creator: AccountId,
       pub created_at: Timestamp,
@@ -25,10 +25,10 @@ use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
       pub image: String,
     }
     
-    impl Crowdfund{
+    impl Campaign{
         pub fn new(id:i32, title: String, donation_target:u128, description: String, image: String) -> Self {
             
-            Crowdfund{
+            Campaign{
                 id,
                 creator: env::signer_account_id(),
                 created_at: env::block_timestamp(),

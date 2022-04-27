@@ -1,0 +1,1 @@
+/Users/jelilat/codes/kickstarterDapp/contract/target/wasm32-unknown-unknown/release/libkickstarter.rlib: /Users/jelilat/codes/kickstarterDapp/contract/src/lib.rs /Users/jelilat/codes/kickstarterDapp/contract/src/models.rs /Users/jelilat/codes/kickstarterDapp/contract/src/utils.rs
