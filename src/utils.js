@@ -13,7 +13,14 @@ const nearConfig =  {
 // Initialize contract & set global variables
 export async function initContract() {
   // Initialize connection to the NEAR testnet
-  const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, nearConfig))
+  const near = await connect(Object.assign({ deps: { keyStore: new keyStores.BrowserLocalStorageKeyStore() } }, {
+    networkId: 'testnet',
+    nodeUrl: 'https://rpc.testnet.near.org',
+    contractName: 'kickstarter.tjelailah.testnet',
+    walletUrl: 'https://wallet.testnet.near.org',
+    helperUrl: 'https://helper.testnet.near.org',
+    explorerUrl: 'https://explorer.testnet.near.org',
+  }))
 
   // Initializing Wallet based Account. It can work with NEAR testnet wallet that
   // is hosted at https://wallet.testnet.near.org
