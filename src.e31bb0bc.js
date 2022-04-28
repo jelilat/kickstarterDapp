@@ -46940,7 +46940,14 @@ var _config = _interopRequireDefault(require("./config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const nearConfig = (0, _config.default)("development" || 'development'); // Initialize contract & set global variables
+const nearConfig = {
+  networkId: 'testnet',
+  nodeUrl: 'https://rpc.testnet.near.org',
+  contractName: 'kickstarter.tjelailah.testnet',
+  walletUrl: 'https://wallet.testnet.near.org',
+  helperUrl: 'https://helper.testnet.near.org',
+  explorerUrl: 'https://explorer.testnet.near.org'
+}; // Initialize contract & set global variables
 
 async function initContract() {
   // Initialize connection to the NEAR testnet
@@ -46948,7 +46955,14 @@ async function initContract() {
     deps: {
       keyStore: new _nearApiJs.keyStores.BrowserLocalStorageKeyStore()
     }
-  }, nearConfig)); // Initializing Wallet based Account. It can work with NEAR testnet wallet that
+  }, {
+    networkId: 'testnet',
+    nodeUrl: 'https://rpc.testnet.near.org',
+    contractName: 'kickstarter.tjelailah.testnet',
+    walletUrl: 'https://wallet.testnet.near.org',
+    helperUrl: 'https://helper.testnet.near.org',
+    explorerUrl: 'https://explorer.testnet.near.org'
+  })); // Initializing Wallet based Account. It can work with NEAR testnet wallet that
   // is hosted at https://wallet.testnet.near.org
 
   window.walletConnection = new _nearApiJs.WalletConnection(near); // Getting the Account ID. If still unauthorized, it's just empty string
@@ -47027,18 +47041,24 @@ function getOriginalCounterPart(index, _a, childrenArr) {
 
 function getOriginalIndexLookupTableByClones(slidesToShow, childrenArr) {
   if (childrenArr.length > 2 * slidesToShow) {
-    for (var table = {}, firstBeginningOfClones = childrenArr.length - 2 * slidesToShow, firstEndOfClones = childrenArr.length - firstBeginningOfClones, firstCount = firstBeginningOfClones, i = 0; i < firstEndOfClones; i++) table[i] = firstCount, firstCount++;
+    for (var table = {}, firstBeginningOfClones = childrenArr.length - 2 * slidesToShow, firstEndOfClones = childrenArr.length - firstBeginningOfClones, firstCount = firstBeginningOfClones, i = 0; i < firstEndOfClones; i++) {
+      table[i] = firstCount, firstCount++;
+    }
 
     var secondBeginningOfClones = childrenArr.length + firstEndOfClones,
         secondEndOfClones = secondBeginningOfClones + childrenArr.slice(0, 2 * slidesToShow).length,
         secondCount = 0;
 
-    for (i = secondBeginningOfClones; i <= secondEndOfClones; i++) table[i] = secondCount, secondCount++;
+    for (i = secondBeginningOfClones; i <= secondEndOfClones; i++) {
+      table[i] = secondCount, secondCount++;
+    }
 
     var originalEnd = secondBeginningOfClones,
         originalCounter = 0;
 
-    for (i = firstEndOfClones; i < originalEnd; i++) table[i] = originalCounter, originalCounter++;
+    for (i = firstEndOfClones; i < originalEnd; i++) {
+      table[i] = originalCounter, originalCounter++;
+    }
 
     return table;
   }
@@ -47047,7 +47067,9 @@ function getOriginalIndexLookupTableByClones(slidesToShow, childrenArr) {
   var totalSlides = 3 * childrenArr.length,
       count = 0;
 
-  for (i = 0; i < totalSlides; i++) table[i] = count, ++count === childrenArr.length && (count = 0);
+  for (i = 0; i < totalSlides; i++) {
+    table[i] = count, ++count === childrenArr.length && (count = 0);
+  }
 
   return table;
 }
@@ -47217,7 +47239,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 
-var throttle = function (func, limit, setIsInThrottle) {
+var throttle = function throttle(func, limit, setIsInThrottle) {
   var inThrottle;
   return function () {
     var args = arguments;
@@ -47231,6 +47253,8 @@ exports.default = throttle;
 },{}],"../node_modules/react-multi-carousel/lib/utils/throwError.js":[function(require,module,exports) {
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 function throwError(state, props) {
   var partialVisbile = props.partialVisbile,
       partialVisible = props.partialVisible,
@@ -47239,7 +47263,7 @@ function throwError(state, props) {
       responsive = props.responsive;
   if ((partialVisbile || partialVisible) && centerMode) throw new Error("center mode can not be used at the same time with partialVisible");
   if (!responsive) throw ssr ? new Error("ssr mode need to be used in conjunction with responsive prop") : new Error("Responsive prop is needed for deciding the amount of items to show on the screen");
-  if (responsive && "object" != typeof responsive) throw new Error("responsive prop must be an object");
+  if (responsive && "object" != _typeof(responsive)) throw new Error("responsive prop must be an object");
 }
 
 Object.defineProperty(exports, "__esModule", {
@@ -47379,13 +47403,15 @@ exports.populateSlidesOnMouseTouchMove = mouseOrTouchMove_1.populateSlidesOnMous
 "use strict";
 
 var __extends = this && this.__extends || function () {
-  var extendStatics = function (d, b) {
-    return (extendStatics = Object.setPrototypeOf || {
+  var _extendStatics = function extendStatics(d, b) {
+    return (_extendStatics = Object.setPrototypeOf || {
       __proto__: []
     } instanceof Array && function (d, b) {
       d.__proto__ = b;
     } || function (d, b) {
-      for (var p in b) b.hasOwnProperty(p) && (d[p] = b[p]);
+      for (var p in b) {
+        b.hasOwnProperty(p) && (d[p] = b[p]);
+      }
     })(d, b);
   };
 
@@ -47394,7 +47420,7 @@ var __extends = this && this.__extends || function () {
       this.constructor = d;
     }
 
-    extendStatics(d, b), d.prototype = null === b ? Object.create(b) : (__.prototype = b.prototype, new __());
+    _extendStatics(d, b), d.prototype = null === b ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
 }();
 
@@ -47453,7 +47479,7 @@ var React = require("react"),
     clones_1 = require("./utils/clones"),
     dots_1 = require("./utils/dots"),
     common_1 = require("./utils/common"),
-    Dots = function (_a) {
+    Dots = function Dots(_a) {
   var props = _a.props,
       state = _a.state,
       goToSlide = _a.goToSlide,
@@ -47492,7 +47518,7 @@ var React = require("react"),
       index: index,
       active: isActive,
       key: index,
-      onClick: function () {
+      onClick: function onClick() {
         return goToSlide(nextSlide);
       },
       carouselState: getState()
@@ -47502,7 +47528,7 @@ var React = require("react"),
       className: "react-multi-carousel-dot " + (isActive ? "react-multi-carousel-dot--active" : "")
     }, React.createElement("button", {
       "aria-label": "Go to slide " + (index + 1),
-      onClick: function () {
+      onClick: function onClick() {
         return goToSlide(nextSlide);
       }
     }));
@@ -47518,13 +47544,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var React = require("react"),
-    LeftArrow = function (_a) {
+    LeftArrow = function LeftArrow(_a) {
   var customLeftArrow = _a.customLeftArrow,
       getState = _a.getState,
       previous = _a.previous,
       disabled = _a.disabled;
   return customLeftArrow ? React.cloneElement(customLeftArrow, {
-    onClick: function () {
+    onClick: function onClick() {
       return previous();
     },
     carouselState: getState(),
@@ -47532,7 +47558,7 @@ var React = require("react"),
   }) : React.createElement("button", {
     "aria-label": "Go to previous slide",
     className: "react-multiple-carousel__arrow react-multiple-carousel__arrow--left",
-    onClick: function () {
+    onClick: function onClick() {
       return previous();
     },
     type: "button",
@@ -47542,13 +47568,13 @@ var React = require("react"),
 
 exports.LeftArrow = LeftArrow;
 
-var RightArrow = function (_a) {
+var RightArrow = function RightArrow(_a) {
   var customRightArrow = _a.customRightArrow,
       getState = _a.getState,
       next = _a.next,
       disabled = _a.disabled;
   return customRightArrow ? React.cloneElement(customRightArrow, {
-    onClick: function () {
+    onClick: function onClick() {
       return next();
     },
     carouselState: getState(),
@@ -47556,7 +47582,7 @@ var RightArrow = function (_a) {
   }) : React.createElement("button", {
     "aria-label": "Go to next slide",
     className: "react-multiple-carousel__arrow react-multiple-carousel__arrow--right",
-    onClick: function () {
+    onClick: function onClick() {
       return next();
     },
     type: "button",
@@ -47574,7 +47600,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var React = require("react"),
     utils_1 = require("./utils"),
-    CarouselItems = function (_a) {
+    CarouselItems = function CarouselItems(_a) {
   var props = _a.props,
       state = _a.state,
       goToSlide = _a.goToSlide,
@@ -47597,7 +47623,7 @@ var React = require("react"),
     return React.createElement("li", {
       key: index,
       "data-index": index,
-      onClick: function () {
+      onClick: function onClick() {
         props.focusOnSelect && goToSlide(index);
       },
       "aria-hidden": utils_1.getIfSlideIsVisbile(index, state) ? "false" : "true",
@@ -49931,25 +49957,31 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 function v() {
   return (v = Object.assign || function (e) {
     for (var t = 1; t < arguments.length; t++) {
       var n = arguments[t];
 
-      for (var r in n) Object.prototype.hasOwnProperty.call(n, r) && (e[r] = n[r]);
+      for (var r in n) {
+        Object.prototype.hasOwnProperty.call(n, r) && (e[r] = n[r]);
+      }
     }
 
     return e;
   }).apply(this, arguments);
 }
 
-var g = function (e, t) {
-  for (var n = [e[0]], r = 0, o = t.length; r < o; r += 1) n.push(t[r], e[r + 1]);
+var g = function g(e, t) {
+  for (var n = [e[0]], r = 0, o = t.length; r < o; r += 1) {
+    n.push(t[r], e[r + 1]);
+  }
 
   return n;
 },
-    S = function (t) {
-  return null !== t && "object" == typeof t && "[object Object]" === (t.toString ? t.toString() : Object.prototype.toString.call(t)) && !(0, _reactIs.typeOf)(t);
+    S = function S(t) {
+  return null !== t && "object" == _typeof(t) && "[object Object]" === (t.toString ? t.toString() : Object.prototype.toString.call(t)) && !(0, _reactIs.typeOf)(t);
 },
     w = Object.freeze([]),
     E = Object.freeze({});
@@ -49993,7 +50025,9 @@ var A = "undefined" != typeof process && (undefined || undefined) || "data-style
 exports.version = C;
 
 function D() {
-  for (var e = arguments.length <= 0 ? void 0 : arguments[0], t = [], n = 1, r = arguments.length; n < r; n += 1) t.push(n < 0 || arguments.length <= n ? void 0 : arguments[n]);
+  for (var e = arguments.length <= 0 ? void 0 : arguments[0], t = [], n = 1, r = arguments.length; n < r; n += 1) {
+    t.push(n < 0 || arguments.length <= n ? void 0 : arguments[n]);
+  }
 
   return t.forEach(function (t) {
     e = e.replace(/%[a-z]/, t);
@@ -50001,7 +50035,9 @@ function D() {
 }
 
 function j(e) {
-  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) n[r - 1] = arguments[r];
+  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) {
+    n[r - 1] = arguments[r];
+  }
 
   throw "production" === "development" ? new Error("An error occurred. See https://git.io/JUIaE#" + e + " for more information." + (n.length > 0 ? " Args: " + n.join(", ") : "")) : new Error(D.apply(void 0, [R[e]].concat(n)).trim());
 }
@@ -50013,19 +50049,27 @@ var T = function () {
 
   var t = e.prototype;
   return t.indexOfGroup = function (e) {
-    for (var t = 0, n = 0; n < e; n++) t += this.groupSizes[n];
+    for (var t = 0, n = 0; n < e; n++) {
+      t += this.groupSizes[n];
+    }
 
     return t;
   }, t.insertRules = function (e, t) {
     if (e >= this.groupSizes.length) {
-      for (var n = this.groupSizes, r = n.length, o = r; e >= o;) (o <<= 1) < 0 && j(16, "" + e);
+      for (var n = this.groupSizes, r = n.length, o = r; e >= o;) {
+        (o <<= 1) < 0 && j(16, "" + e);
+      }
 
       this.groupSizes = new Uint32Array(o), this.groupSizes.set(n), this.length = o;
 
-      for (var s = r; s < o; s++) this.groupSizes[s] = 0;
+      for (var s = r; s < o; s++) {
+        this.groupSizes[s] = 0;
+      }
     }
 
-    for (var i = this.indexOfGroup(e + 1), a = 0, c = t.length; a < c; a++) this.tag.insertRule(i, t[a]) && (this.groupSizes[e]++, i++);
+    for (var i = this.indexOfGroup(e + 1), a = 0, c = t.length; a < c; a++) {
+      this.tag.insertRule(i, t[a]) && (this.groupSizes[e]++, i++);
+    }
   }, t.clearGroup = function (e) {
     if (e < this.length) {
       var t = this.groupSizes[e],
@@ -50033,13 +50077,17 @@ var T = function () {
           r = n + t;
       this.groupSizes[e] = 0;
 
-      for (var o = n; o < r; o++) this.tag.deleteRule(n);
+      for (var o = n; o < r; o++) {
+        this.tag.deleteRule(n);
+      }
     }
   }, t.getGroup = function (e) {
     var t = "";
     if (e >= this.length || 0 === this.groupSizes[e]) return t;
 
-    for (var n = this.groupSizes[e], r = this.indexOfGroup(e), o = r + n, s = r; s < o; s++) t += this.tag.getRule(s) + "/*!sc*/\n";
+    for (var n = this.groupSizes[e], r = this.indexOfGroup(e), o = r + n, s = r; s < o; s++) {
+      t += this.tag.getRule(s) + "/*!sc*/\n";
+    }
 
     return t;
   }, e;
@@ -50047,26 +50095,30 @@ var T = function () {
     x = new Map(),
     k = new Map(),
     V = 1,
-    B = function (e) {
+    B = function B(e) {
   if (x.has(e)) return x.get(e);
 
-  for (; k.has(V);) V++;
+  for (; k.has(V);) {
+    V++;
+  }
 
   var t = V++;
   return "production" !== "development" && ((0 | t) < 0 || t > 1 << 30) && j(16, "" + t), x.set(e, t), k.set(t, e), t;
 },
-    z = function (e) {
+    z = function z(e) {
   return k.get(e);
 },
-    M = function (e, t) {
+    M = function M(e, t) {
   t >= V && (V = t + 1), x.set(e, t), k.set(t, e);
 },
     G = "style[" + A + '][data-styled-version="5.3.5"]',
     L = new RegExp("^" + A + '\\.g(\\d+)\\[id="([\\w\\d-]+)"\\].*?"([^"]*)'),
-    F = function (e, t, n) {
-  for (var r, o = n.split(","), s = 0, i = o.length; s < i; s++) (r = o[s]) && e.registerName(t, r);
+    F = function F(e, t, n) {
+  for (var r, o = n.split(","), s = 0, i = o.length; s < i; s++) {
+    (r = o[s]) && e.registerName(t, r);
+  }
 },
-    Y = function (e, t) {
+    Y = function Y(e, t) {
   for (var n = (t.textContent || "").split("/*!sc*/\n"), r = [], o = 0, s = n.length; o < s; o++) {
     var i = n[o].trim();
 
@@ -50081,10 +50133,10 @@ var T = function () {
     }
   }
 },
-    q = function () {
+    q = function q() {
   return "undefined" != typeof window && void 0 !== window.__webpack_nonce__ ? window.__webpack_nonce__ : null;
 },
-    H = function (e) {
+    H = function H(e) {
   var t = document.head,
       n = e || t,
       r = document.createElement("style"),
@@ -50230,7 +50282,7 @@ var T = function () {
   }, e;
 }(),
     K = /(a)(d)/gi,
-    Q = function (e) {
+    Q = function Q(e) {
   return String.fromCharCode(e + (e > 25 ? 39 : 97));
 };
 
@@ -50238,17 +50290,21 @@ function ee(e) {
   var t,
       n = "";
 
-  for (t = Math.abs(e); t > 52; t = t / 52 | 0) n = Q(t % 52) + n;
+  for (t = Math.abs(e); t > 52; t = t / 52 | 0) {
+    n = Q(t % 52) + n;
+  }
 
   return (Q(t % 52) + n).replace(K, "$1-$2");
 }
 
-var te = function (e, t) {
-  for (var n = t.length; n;) e = 33 * e ^ t.charCodeAt(--n);
+var te = function te(e, t) {
+  for (var n = t.length; n;) {
+    e = 33 * e ^ t.charCodeAt(--n);
+  }
 
   return e;
 },
-    ne = function (e) {
+    ne = function ne(e) {
   return te(5381, e);
 };
 
@@ -50355,7 +50411,7 @@ function ce(e) {
   }(function (e) {
     d.push(e);
   }),
-      f = function (e, r, s) {
+      f = function f(e, r, s) {
     return 0 === r && -1 !== ae.indexOf(s[n.length]) || s.match(o) ? e : "." + t;
   };
 
@@ -50444,7 +50500,7 @@ var ve = function () {
     ge = /([A-Z])/,
     Se = /([A-Z])/g,
     we = /^ms-/,
-    Ee = function (e) {
+    Ee = function Ee(e) {
   return "-" + e.toLowerCase();
 };
 
@@ -50452,13 +50508,15 @@ function be(e) {
   return ge.test(e) ? e.replace(Se, Ee).replace(we, "-ms-") : e;
 }
 
-var _e = function (e) {
+var _e = function _e(e) {
   return null == e || !1 === e || "" === e;
 };
 
 function Ne(e, n, r, o) {
   if (Array.isArray(e)) {
-    for (var s, i = [], a = 0, c = e.length; a < c; a += 1) "" !== (s = Ne(e[a], n, r, o)) && (Array.isArray(s) ? i.push.apply(i, s) : i.push(s));
+    for (var s, i = [], a = 0, c = e.length; a < c; a += 1) {
+      "" !== (s = Ne(e[a], n, r, o)) && (Array.isArray(s) ? i.push.apply(i, s) : i.push(s));
+    }
 
     return i;
   }
@@ -50478,25 +50536,29 @@ function Ne(e, n, r, o) {
         o,
         s = [];
 
-    for (var i in t) t.hasOwnProperty(i) && !_e(t[i]) && (Array.isArray(t[i]) && t[i].isCss || b(t[i]) ? s.push(be(i) + ":", t[i], ";") : S(t[i]) ? s.push.apply(s, e(t[i], i)) : s.push(be(i) + ": " + (r = i, null == (o = t[i]) || "boolean" == typeof o || "" === o ? "" : "number" != typeof o || 0 === o || r in _unitless.default ? String(o).trim() : o + "px") + ";"));
+    for (var i in t) {
+      t.hasOwnProperty(i) && !_e(t[i]) && (Array.isArray(t[i]) && t[i].isCss || b(t[i]) ? s.push(be(i) + ":", t[i], ";") : S(t[i]) ? s.push.apply(s, e(t[i], i)) : s.push(be(i) + ": " + (r = i, null == (o = t[i]) || "boolean" == typeof o || "" === o ? "" : "number" != typeof o || 0 === o || r in _unitless.default ? String(o).trim() : o + "px") + ";"));
+    }
 
     return n ? [n + " {"].concat(s, ["}"]) : s;
   }(e) : e.toString();
 }
 
-var Ae = function (e) {
+var Ae = function Ae(e) {
   return Array.isArray(e) && (e.isCss = !0), e;
 };
 
 function Ce(e) {
-  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) n[r - 1] = arguments[r];
+  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) {
+    n[r - 1] = arguments[r];
+  }
 
   return b(e) || S(e) ? Ae(Ne(g(w, [e].concat(n)))) : 0 === n.length && 1 === e.length && "string" == typeof e[0] ? e : Ae(Ne(g(e, n)));
 }
 
 var Ie = /invalid hook call/i,
     Pe = new Set(),
-    Oe = function (e, t) {
+    Oe = function Oe(e, t) {
   if ("production" !== "development") {
     var n = "The component " + e + (t ? ' with the id of "' + t + '"' : "") + " has been created dynamically.\nYou may see this warning because you've called styled inside another component.\nTo resolve this only create new StyledComponents outside of any render method and function component.",
         r = console.error;
@@ -50505,7 +50567,9 @@ var Ie = /invalid hook call/i,
       var o = !0;
       console.error = function (e) {
         if (Ie.test(e)) o = !1, Pe.delete(n);else {
-          for (var t = arguments.length, s = new Array(t > 1 ? t - 1 : 0), i = 1; i < t; i++) s[i - 1] = arguments[i];
+          for (var t = arguments.length, s = new Array(t > 1 ? t - 1 : 0), i = 1; i < t; i++) {
+            s[i - 1] = arguments[i];
+          }
 
           r.apply(void 0, [e].concat(s));
         }
@@ -50517,7 +50581,7 @@ var Ie = /invalid hook call/i,
     }
   }
 },
-    Re = function (e, t, n) {
+    Re = function Re(e, t, n) {
   return void 0 === n && (n = E), e.theme !== n.theme && e.theme || t || n.theme;
 },
     De = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~-]+/g,
@@ -50527,7 +50591,7 @@ function Te(e) {
   return e.replace(De, "-").replace(je, "");
 }
 
-var xe = function (e) {
+var xe = function xe(e) {
   return ee(ne(e) >>> 0);
 };
 
@@ -50535,10 +50599,10 @@ function ke(e) {
   return "string" == typeof e && ("production" === "development" || e.charAt(0) === e.charAt(0).toLowerCase());
 }
 
-var Ve = function (e) {
-  return "function" == typeof e || "object" == typeof e && null !== e && !Array.isArray(e);
+var Ve = function Ve(e) {
+  return "function" == typeof e || "object" == _typeof(e) && null !== e && !Array.isArray(e);
 },
-    Be = function (e) {
+    Be = function Be(e) {
   return "__proto__" !== e && "constructor" !== e && "prototype" !== e;
 };
 
@@ -50548,11 +50612,15 @@ function ze(e, t, n) {
 }
 
 function Me(e) {
-  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) n[r - 1] = arguments[r];
+  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) {
+    n[r - 1] = arguments[r];
+  }
 
   for (var o = 0, s = n; o < s.length; o++) {
     var i = s[o];
-    if (Ve(i)) for (var a in i) Be(a) && ze(e, i[a], a);
+    if (Ve(i)) for (var a in i) {
+      Be(a) && ze(e, i[a], a);
+    }
   }
 
   return e;
@@ -50572,10 +50640,10 @@ function Fe(e) {
 
       if (b(e)) {
         var n = e(t);
-        return "production" === "development" || null !== n && !Array.isArray(n) && "object" == typeof n ? n : j(7);
+        return "production" === "development" || null !== n && !Array.isArray(n) && "object" == _typeof(n) ? n : j(7);
       }
 
-      return Array.isArray(e) || "object" != typeof e ? j(8) : t ? v({}, t, {}, e) : e;
+      return Array.isArray(e) || "object" != _typeof(e) ? j(8) : t ? v({}, t, {}, e) : e;
     }(e.theme, t);
   }, [e.theme, t]);
   return e.children ? _react.default.createElement(Ge.Provider, {
@@ -50611,7 +50679,7 @@ function qe(e, t, n) {
   var C,
       I = new se(n, g, o ? e.componentStyle : void 0),
       P = I.isStatic && 0 === c.length,
-      O = function (e, t) {
+      O = function O(e, t) {
     return function (e, t, n, r) {
       var o = e.attrs,
           i = e.componentStyle,
@@ -50634,7 +50702,9 @@ function qe(e, t, n) {
               s,
               i = e;
 
-          for (t in b(i) && (i = i(r)), i) r[t] = o[t] = "className" === t ? (n = o[t], s = i[t], n && s ? n + " " + s : n || s) : i[t];
+          for (t in b(i) && (i = i(r)), i) {
+            r[t] = o[t] = "className" === t ? (n = o[t], s = i[t], n && s ? n + " " + s : n || s) : i[t];
+          }
         }), [r, o];
       }(Re(t, (0, _react.useContext)(Ge), a) || E, t, o),
           y = f[0],
@@ -50651,7 +50721,9 @@ function qe(e, t, n) {
           A = g !== t ? v({}, t, {}, g) : t,
           C = {};
 
-      for (var I in A) "$" !== I[0] && "as" !== I && ("forwardedAs" === I ? C.as = A[I] : (d ? d(I, _isPropValid.default, _) : !N || (0, _isPropValid.default)(I)) && (C[I] = A[I]));
+      for (var I in A) {
+        "$" !== I[0] && "as" !== I && ("forwardedAs" === I ? C.as = A[I] : (d ? d(I, _isPropValid.default, _) : !N || (0, _isPropValid.default)(I)) && (C[I] = A[I]));
+      }
 
       return t.style && g.style !== t.style && (C.style = v({}, t.style, {}, g.style)), C.className = Array.prototype.concat(c, h, S !== h ? S : null, t.className, g.className).filter(Boolean).join(" "), C.ref = w, (0, _react.createElement)(_, C);
     }(C, e, t, P);
@@ -50666,7 +50738,9 @@ function qe(e, t, n) {
           o = {},
           s = Object.keys(e);
 
-      for (r = 0; r < s.length; r++) n = s[r], t.indexOf(n) >= 0 || (o[n] = e[n]);
+      for (r = 0; r < s.length; r++) {
+        n = s[r], t.indexOf(n) >= 0 || (o[n] = e[n]);
+      }
 
       return o;
     }(t, ["componentId"]),
@@ -50677,10 +50751,10 @@ function qe(e, t, n) {
       componentId: s
     }), n);
   }, Object.defineProperty(C, "defaultProps", {
-    get: function () {
+    get: function get() {
       return this._foldedDefaultProps;
     },
-    set: function (t) {
+    set: function set(t) {
       this._foldedDefaultProps = o ? Me({}, e.defaultProps, t) : t;
     }
   }), "production" !== "development" && (Oe(f, g), C.warnTooManyClasses = function (e, t) {
@@ -50706,11 +50780,11 @@ function qe(e, t, n) {
   }), C;
 }
 
-var He = function (e) {
+var He = function He(e) {
   return function e(t, r, o) {
     if (void 0 === o && (o = E), !(0, _reactIs.isValidElementType)(r)) return j(1, String(r));
 
-    var s = function () {
+    var s = function s() {
       return t(r, o, Ce.apply(void 0, arguments));
     };
 
@@ -50746,7 +50820,9 @@ var $e = function () {
 }();
 
 function We(e) {
-  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), o = 1; o < t; o++) n[o - 1] = arguments[o];
+  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), o = 1; o < t; o++) {
+    n[o - 1] = arguments[o];
+  }
 
   var i = Ce.apply(void 0, [e].concat(n)),
       a = "sc-global-" + xe(JSON.stringify(i)),
@@ -50781,7 +50857,9 @@ function We(e) {
 function Ue(e) {
   "production" !== "development" && "undefined" != typeof navigator && "ReactNative" === navigator.product && console.warn("`keyframes` cannot be used on ReactNative, only on the web. To do animation in ReactNative please use Animated.");
 
-  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) n[r - 1] = arguments[r];
+  for (var t = arguments.length, n = new Array(t > 1 ? t - 1 : 0), r = 1; r < t; r++) {
+    n[r - 1] = arguments[r];
+  }
 
   var o = Ce.apply(void 0, [e].concat(n)).join(""),
       s = xe(o);
@@ -50824,7 +50902,7 @@ var Je = function () {
     return j(3);
   }, e;
 }(),
-    Xe = function (e) {
+    Xe = function Xe(e) {
   var t = _react.default.forwardRef(function (t, n) {
     var o = (0, _react.useContext)(Ge),
         i = e.defaultProps,
@@ -50837,7 +50915,7 @@ var Je = function () {
 
   return (0, _hoistNonReactStatics.default)(t, e), t.displayName = "WithTheme(" + _(e) + ")", t;
 },
-    Ze = function () {
+    Ze = function Ze() {
   return (0, _react.useContext)(Ge);
 },
     Ke = {
@@ -62040,7 +62118,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52575" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50690" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
