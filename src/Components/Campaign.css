@@ -22,7 +22,7 @@ textarea {
     height: 100px;
 }
 
-button {
+input[type="submit"] {
     background-color: #6c83ff;
     color: white;
     border-radius: 5px;

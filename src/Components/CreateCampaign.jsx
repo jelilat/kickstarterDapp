@@ -39,6 +39,7 @@ function Create() {
       }
 
       const createCampaign = async () => {
+          alert("got here")
         if (!window.walletConnection.isSignedIn()) {
             alert('You must be signed in to create a campaign');
             return;
@@ -80,7 +81,7 @@ function Create() {
     return(
         <div className="form">
             <h1 style={{textAlign: 'center'}}>Create Campaign</h1>
-            <form>
+            <form onSubmit={createCampaign}>
                 <label>Title</label><br />
                 <input type="text" name="title" placeholder="e.g. Kickstarter" id="title" onChange={updateDescription} /> <br />
                 <label>Description</label><br />
@@ -89,7 +90,7 @@ function Create() {
                 <input type="number" min="0" name="goal" placeholder="20" id="goal" onChange={updateDescription} /><br />
                 <label>Image</label>
                 <input type="file" accept='image/jpg, image/jpeg' onChange={handleFileChange} /><br />
-                <button type="submit" onClick={createCampaign}>Create Campaign</button>
+                <input type="submit" value="Create Campaign" />
             </form>
         </div>
     )

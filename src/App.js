@@ -28,7 +28,6 @@ export default function App() {
         </div>
         <img src={hero} alt="hero" />
       </div>
-      <h1 style={{textAlign:'center'}}>Projects</h1>
      </div>
       <Projects />
       <Create />
