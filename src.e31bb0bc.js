@@ -61872,10 +61872,11 @@ function Create() {
   };
 
   const createCampaign = async () => {
-    // if (!window.walletConnection.isSignedIn()) {
-    //     alert('You must be signed in to create a campaign');
-    //     return;
-    // }
+    if (!window.walletConnection.isSignedIn()) {
+      alert('You must be signed in to create a campaign');
+      return;
+    }
+
     if (file === undefined) {
       alert('You must upload an image');
       return;
