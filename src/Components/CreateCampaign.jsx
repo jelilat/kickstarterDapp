@@ -1,16 +1,23 @@
+import "regenerator-runtime/runtime";
 import React, { useState, useEffect } from 'react';
 import "./Campaign.css";
-import { create } from 'ipfs-http-client';
+import { NFTStorage } from 'nft.storage/dist/bundle.esm.min.js';
 const BN = require("bn.js");
 
 function Create() {
-    const client = create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+    const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDM0YzVEMjlBNGZFNzNEYWIwOTdhOWY4ODdEOTg4YmY0QjEwNzRFMEIiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MDc5MzA2ODQ0NCwibmFtZSI6Im5lYXIgbmZ0In0.ZIeP2yfnCtyeEB54705cmhxEdC_mIbg8KQCUWnizP3w';
+    const nft = new NFTStorage({
+        endpoint: 'https://api.nft.storage/',
+        token
+    });
     const [file, setFile] = useState()
     const [description, setDescription] = useState({
       name: '',
       description: '',
       goal: 0,
     });
+    const [src, setsrc] = useState()
 
     const updateDescription = () => {
         const name = document.getElementById('title');
@@ -27,6 +34,8 @@ function Create() {
           console.log(e)
         const fileData = e.target.files[0];
         setFile(fileData);
+        const URL = window.URL || window.webkitURL;
+        setsrc(URL.createObjectURL(fileData));
       }
 
       const createCampaign = async () => {
@@ -42,10 +51,10 @@ function Create() {
             alert('Please fill out all fields');
             return;
         } else {
-            console.log(await client.add(file))
-            await client.add(file)
-            .then( async (CID) => {
-                const url = `https://ipfs.io/ipfs/${CID.cid.toString()}`;
+            await nft.storeDirectory([file])
+            .then(async (CID) => {
+                alert(CID);
+                const url = `https://${CID}.ipfs.dweb.link`;
                 console.log(url)
                 await window.contract.create_campaign(
                     description.name,
@@ -55,13 +64,13 @@ function Create() {
                 )
                 .then(alert("Campaign created successfully!"))
                 .catch((err) => {
-                    console.log(err);
-                    alert("Error creating campaign. Try again.")
+                    // alert(err);
+                    alert("Error creating campaign. Try again." + err);
                 });
             })
             .catch((err) =>{
+                alert("Error uploading image. Try again." + err);
                 console.log(err);
-                // alert("Error uploading image. Try again.")
             });
 
         }
