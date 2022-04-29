@@ -30,18 +30,22 @@ function Projects() {
         setLoading(true);
         if (donationAmount === undefined) {
             alert('Please enter an amount to donate');
+            setLoading(false)
             return;
         }
         if (donationAmount === 0 || donationAmount < 1) {
-            alert
+            alert('Please enter an amount greater than or equal to 1');
+            setLoading(false)
+            return;
         }
         
         const camount = Math.floor(amount);
+        console.log(camount)
         const bamount = new BN(camount);
         console.log(bamount.mul(ONE_NEAR))
         await window.contract.add_donation({
             num_id: id,
-            amount: amount,
+            amount: camount,
         }, 
         300000000000000, //gas estimate
         bamount.mul(ONE_NEAR), //donation amount
@@ -85,7 +89,11 @@ function Projects() {
                             <span style={{fontSize:'0.8em'}}>Target: {project.donation_target} Ⓝ</span><br />
                             <p>{project.description}</p>
                             <button onClick={() =>{
-                                setDonationId(index)
+                                if (window.accountId) {
+                                    setDonationId(index)
+                                } else {
+                                    alert('Please login to donate')
+                                }
                             }}>Support</button>
                         </div>
                         )

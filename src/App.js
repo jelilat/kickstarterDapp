@@ -24,7 +24,7 @@ export default function App() {
           </h1>
           <p>Creative work shows us what's possible. Help fund it here.</p>
           <button>Donate to project</button>
-          <button>Create campaign</button>
+          <button style={{cursor: "pointer"}}>Create campaign</button>
         </div>
         <img src={hero} alt="hero" />
       </div>
