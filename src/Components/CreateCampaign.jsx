@@ -76,7 +76,7 @@ function Create() {
       }
 
     return(
-        <div className="form">
+        <div className="form" id="create-campaign">
             <h1 style={{textAlign: 'center'}}>Create Campaign</h1>
             <div>
                 <label>Title</label><br />

@@ -23,8 +23,8 @@ export default function App() {
             <span style={{color:"#fdcf0b"}}>Bring</span> creative projects to life with your financial support.
           </h1>
           <p>Creative work shows us what's possible. Help fund it here.</p>
-          <button>Donate to project</button>
-          <button style={{cursor: "pointer"}}>Create campaign</button>
+          <a href="#projects"><button>Donate to project</button></a>
+          <a href="#create-campaign"><button>Create campaign</button></a>
         </div>
         <img src={hero} alt="hero" />
       </div>
