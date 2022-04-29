@@ -30,7 +30,7 @@ pub fn asNEAR(amount: u128) -> String {
     format!("{}", amount / ONE_NEAR)
 }
 /// Converts a quantity in NEAR into Yocto Ⓝ tokens
-pub fn toYocto<D: Into<u128>>(amount: D) -> u128 {
+pub fn to_yocto<D: Into<u128>>(amount: D) -> u128 {
     ONE_NEAR * amount.into()
 }
 /// Asserts that the contract has called itself

@@ -73,10 +73,11 @@ impl Contract{
         
     }
 
+    #[payable]
     pub fn add_donation(&mut self, num_id:i32, amount:u128) {
-        assert!(amount == env::attached_deposit(), "Attached deposit must be equal to the donation amount");
         let id: usize = num_id as usize;
         let transfer_amount: u128 = ONE_NEAR * amount;
+        assert!(transfer_amount == env::attached_deposit(), "Attached deposit must be equal to the donation amount");
         let campaign: &mut Campaign = self.campaigns.get_mut(id).unwrap();
         campaign.total_donations = campaign.total_donations + transfer_amount;
         campaign.donations.push(Donation::new(num_id));
