@@ -73,7 +73,7 @@ function Projects() {
       };
 
     return (
-        <div className="container">
+        <div className="container" id="projects">
             <div className="projects">
                 <h1 style={{textAlign:'center'}}>Projects</h1>
                 <Carousel responsive={responsive} >
