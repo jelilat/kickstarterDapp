@@ -4,10 +4,16 @@ import 'react-multi-carousel/lib/styles.css'
 import { BallTriangle } from 'react-loader-spinner';
 import './Projects.css'
 const BN = require("bn.js")
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 function Projects() {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [donationId, setDonationId] = useState()
+    const [donationAmount, setDonationAmount] = useState()
+
+    const ONE_NEAR = new BN("1000000000000000000000000");
 
     useEffect(async () => {
         setLoading(true);
@@ -17,22 +23,32 @@ function Projects() {
             setProjects(crowdfundProjects);
             console.log(crowdfundProjects);
             setLoading(false)
-            console.log(loading)
         })
     }, [])
 
     async function donate(id, amount) {
-        const bamount = new BN(amount);
-        const conversion = new BN("10000000000000000000000");
+        setLoading(true);
+        if (donationAmount === undefined) {
+            alert('Please enter an amount to donate');
+            return;
+        }
+        if (donationAmount === 0 || donationAmount < 1) {
+            alert
+        }
+        
+        const camount = Math.floor(amount);
+        const bamount = new BN(camount);
+        console.log(bamount.mul(ONE_NEAR))
         await window.contract.add_donation({
             num_id: id,
-            amount: 1,
+            amount: amount,
         }, 
         300000000000000, //gas estimate
-        1, //donation amount
+        bamount.mul(ONE_NEAR), //donation amount
         )
         .then((res) => {
             console.log(res)
+            setLoading(false)
         })
 
     }
@@ -66,9 +82,10 @@ function Projects() {
                             <div className="project" key={index}>
                             <img src={project.image} />
                             <h3>{project.title}</h3>
+                            <span style={{fontSize:'0.8em'}}>Target: {project.donation_target} Ⓝ</span><br />
                             <p>{project.description}</p>
                             <button onClick={() =>{
-                                donate(index, "1")
+                                setDonationId(index)
                             }}>Support</button>
                         </div>
                         )
@@ -85,8 +102,19 @@ function Projects() {
                     }}
                     >
                     <BallTriangle color="#ec5990" height="100" width="100" />
-                    {console.log(loading)}
                 </div>}
+                {donationId && 
+                    <div className="donate-section">
+                        <label>Amount <span className="donate-icon">
+                            <FontAwesomeIcon icon={faInfoCircle} /> <span>Inputs will be rounded to the nearest whole number
+                            </span></span>
+                        </label>
+                        <input type="number" name="amount" placeholder="1" className="amount" onChange={(e) => {setDonationAmount(e.target.value)}} />
+                        <button disabled={!donationAmount || donationAmount === 0 || loading} onClick={() => {donate(donationId, donationAmount)} }>
+                            Donate
+                            {loading && <FontAwesomeIcon icon={faSpinner} />}
+                            </button>
+                    </div>}
             </div>
         </div>
     )

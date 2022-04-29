@@ -32,6 +32,8 @@
     "shelljs": "~0.8.4"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "ipfs-car": "^0.7.0",
     "ipfs-core": "^0.14.3",
     "ipfs-http-client": "^56.0.3",

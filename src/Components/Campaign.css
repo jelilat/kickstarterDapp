@@ -22,7 +22,7 @@ textarea {
     height: 100px;
 }
 
-input[type="submit"] {
+.create-button {
     background-color: #6c83ff;
     color: white;
     border-radius: 5px;
@@ -30,6 +30,7 @@ input[type="submit"] {
     padding: 10px;
     margin: auto;
     cursor: pointer;
+    width: 100%;
 }
 
 @media screen and (max-width: 768px) {
