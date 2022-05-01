@@ -87,6 +87,7 @@ function Projects() {
                             <img src={project.image} />
                             <h3>{project.title}</h3>
                             <span style={{fontSize:'0.8em'}}>Target: {project.donation_target} Ⓝ</span><br />
+                            <span style={{fontSize:'0.8em'}}>Raised: {project.total_donations/ONE_NEAR} Ⓝ</span><br />
                             <p>{project.description}</p>
                             <button onClick={() =>{
                                 if (window.accountId) {
